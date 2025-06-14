@@ -1,8 +1,8 @@
 # Build stage (inside container - no local build needed)
 FROM maven:3.9.6-eclipse-temurin-17 AS build
-WORKDIR /app
+WORKDIR /app/backend
 COPY . .
-RUN cd backend && mvn clean package
+RUN mvn clean package
 
 # Runtime stage
 FROM eclipse-temurin:17-jre-jammy
