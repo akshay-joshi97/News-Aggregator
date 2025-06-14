@@ -1,11 +1,11 @@
 # Build stage (inside container - no local build needed)
-FROM maven:3.8.6-openjdk-17 AS build
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY . .
 RUN cd backend && mvn clean package
 
 # Runtime stage
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jre-jammy
 WORKDIR /app
 COPY --from=build /app/backend/target/NewsAggregator2-1.0-SNAPSHOT.jar .
 EXPOSE 8080
