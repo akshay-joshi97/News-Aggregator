@@ -1,0 +1,7 @@
+# Java
+news-aggregator-project/backend/target/
+*.jar
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
