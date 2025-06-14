@@ -9,4 +9,4 @@ FROM eclipse-temurin:17-jre-jammy
 WORKDIR /app
 COPY --from=build /app/backend/target/NewsAggregator2-1.0-SNAPSHOT.jar .
 EXPOSE 8080
-CMD ["java", "-jar", "NewsAggregator2-1.0-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "NewsAggregator2-1.0-SNAPSHOT.jar"]
