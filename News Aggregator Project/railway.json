@@ -1,0 +1,7 @@
+{
+  "build": {
+    "root": "backend",
+    "buildCommand": "mvn clean package",
+    "startCommand": "java -jar target/NewsAggregator2-1.0-SNAPSHOT.jar"
+  }
+}
