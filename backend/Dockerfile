@@ -8,6 +8,6 @@ RUN mvn clean package
 # Runtime stage
 FROM eclipse-temurin:17-jre-jammy
 WORKDIR /app
-COPY --from=build /app/target/NewsAggregator2-1.0-SNAPSHOT.jar .
+COPY --from=build /app/backend/target/NewsAggregator2-1.0-SNAPSHOT.jar .
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "NewsAggregator2-1.0-SNAPSHOT.jar"]
