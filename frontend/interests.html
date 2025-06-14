@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Select Interests</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter&display=swap">
+    <style>
+        body {
+          font-family: 'Inter', sans-serif;
+          background-color: #f5f5f5;
+          padding: 20px;
+        }
+
+        h2 {
+          text-align: center;
+          margin-bottom: 30px;
+        }
+
+        .interests-container {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+          gap: 20px;
+          max-width: 600px;
+          margin: auto;
+        }
+
+        .interest-tile {
+          background-color: white;
+          padding: 20px;
+          text-align: center;
+          border-radius: 12px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+          cursor: pointer;
+          transition: 0.2s;
+          border: 2px solid transparent;
+        }
+
+        .interest-tile:hover {
+          box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .interest-tile.selected {
+          border-color: #007bff;
+          background-color: #e6f0ff;
+        }
+
+        button {
+          display: block;
+          margin: 30px auto 0;
+          padding: 12px 24px;
+          font-size: 16px;
+          border: none;
+          border-radius: 8px;
+          background-color: #007bff;
+          color: white;
+          cursor: pointer;
+        }
+
+        button:hover {
+          background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Select Your Interests</h2>
+
+<div class="interests-container" id="interestsContainer">
+    <!-- Tiles will be inserted by JS -->
+</div>
+
+<button id="submitBtn">Save Interests</button>
+
+<script src="interests.js"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>News Feed</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          background: #f4f6f8;
+          margin: 0;
+          padding: 0 20px;
+        }
+
+        h1 {
+          text-align: center;
+          padding: 20px 0;
+        }
+
+        .feed-container {
+          max-width: 900px;
+          margin: auto;
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        }
+
+        .news-card {
+          background: #fff;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          transition: 0.3s;
+        }
+
+        .news-card:hover {
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .news-title {
+          font-size: 20px;
+          margin: 0 0 10px;
+        }
+
+        .news-summary {
+          font-size: 16px;
+          color: #555;
+        }
+
+        .news-link {
+          margin-top: 10px;
+          display: inline-block;
+          color: #0077cc;
+          text-decoration: none;
+          font-weight: bold;
+        }
+
+        .news-link:hover {
+          text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Your News Feed</h1>
+
+<div class="feed-container" id="feedContainer">
+    <!-- News articles will go here -->
+</div>
+
+<script src="feed.js"></script>
+</body>
+</html>
