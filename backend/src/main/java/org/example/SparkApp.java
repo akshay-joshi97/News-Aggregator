@@ -14,14 +14,34 @@ public class SparkApp {
 
         Gson gson = new Gson();
 
-        // Set port
-        Spark.port(4567);
+        // Set port from environment variable or default to 4567
+        String port = System.getenv("PORT");
+        if (port != null) {
+            Spark.port(Integer.parseInt(port));
+        } else {
+            Spark.port(4567);
+        }
 
         // Enable CORS for frontend
         Spark.before((request, response) -> {
             response.header("Access-Control-Allow-Origin", "*");
             response.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
             response.header("Access-Control-Allow-Headers", "Content-Type,Authorization,X-Requested-With,Content-Length,Accept,Origin");
+        });
+
+        // Root endpoint to verify server is running
+        Spark.get("/", (request, response) -> {
+            response.type("application/json");
+            Map<String, Object> result = new HashMap<>();
+            result.put("status", "Server is running");
+            result.put("message", "Welcome to News Aggregator API");
+            return gson.toJson(result);
+        });
+
+        // Hello endpoint
+        Spark.get("/hello", (request, response) -> {
+            response.type("application/json");
+            return "{\"message\":\"Hello from Spark Java!\"}";
         });
 
         // Handle preflight requests
