@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
     submitButton.disabled = true;
 
     try {
-      const response = await fetch("http://localhost:4567/login", {
+      const response = await fetch("https://news-aggregator-0w52.onrender.com/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -296,7 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
     submitButton.disabled = true;
 
     try {
-      const response = await fetch("http://localhost:4567/register", {
+      const response = await fetch("https://news-aggregator-0w52.onrender.com/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
