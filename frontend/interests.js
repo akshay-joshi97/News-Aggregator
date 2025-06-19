@@ -40,7 +40,7 @@ submitBtn.addEventListener("click", () => {
     interests: selected
   };
 console.log('data>>>', data);
-  fetch("http://localhost:4567/updateinterests", {
+  fetch("https://news-aggregator-0w52.onrender.com/updateinterests", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
