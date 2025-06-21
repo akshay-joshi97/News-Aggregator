@@ -1,37 +1,31 @@
 package org.example;
+
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseManager {
 
-    private static final String URL = "jdbc:postgresql://aws-0-ap-south-1.pooler.supabase.com:6543/postgres?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory&pgbouncer=true";
-    private static final String USER = "postgres.xfyltptitzikpzwnzblo";
-    private static final String PASSWORD = "Akshay@123@supabase";
+    private static final HikariDataSource dataSource;
 
     static {
-        try {
-            // Load PostgreSQL driver
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            System.err.println("PostgreSQL JDBC Driver not found.");
-            e.printStackTrace();
-        }
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl("jdbc:postgresql://aws-0-ap-south-1.pooler.supabase.com:6543/postgres?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory&pgbouncer=true");
+        config.setUsername("postgres.xfyltptitzikpzwnzblo");
+        config.setPassword("Akshay@123@supabase");
+
+        config.setMaximumPoolSize(5); // Avoid hitting Supabase limits
+        config.setMinimumIdle(1);
+        config.setIdleTimeout(30000); // 30 seconds
+        config.setConnectionTimeout(30000); // 30 seconds
+        config.setLeakDetectionThreshold(15000); // Detect slow leaks
+
+        dataSource = new HikariDataSource(config);
     }
 
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
-    }
-
-    // Test connection
-    public static void main(String[] args) {
-        try (Connection conn = getConnection()) {
-            if (conn != null) {
-                System.out.println("Connected to Supabase successfully!");
-            }
-        } catch (SQLException e) {
-            System.err.println("Connection failed!");
-            e.printStackTrace();
-        }
+        return dataSource.getConnection();
     }
 }

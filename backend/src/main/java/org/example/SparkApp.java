@@ -61,13 +61,12 @@ public class SparkApp {
         Spark.post("/login", (request, response) -> {
             response.type("application/json");
 
-            try {
+            try(Connection conn = DatabaseManager.getConnection()) {
                 // Parse JSON request
                 Map<String, String> requestData = gson.fromJson(request.body(), Map.class);
                 String email = requestData.get("email");
                 String password = requestData.get("password");
 
-                Connection conn = DatabaseManager.getConnection();
                 JdbcUserRepository userRepository = new JdbcUserRepository(conn);
                 int userId = userRepository.loginUser(email, password);
                 Map<String, Object> result = new HashMap<>();
@@ -97,14 +96,13 @@ public class SparkApp {
         Spark.post("/register", (request, response) -> {
             response.type("application/json");
 
-            try {
+            try(Connection conn = DatabaseManager.getConnection()) {
                 // Parse JSON request
                 Map<String, String> requestData = gson.fromJson(request.body(), Map.class);
                 String name = requestData.get("name");
                 String email = requestData.get("email");
                 String password = requestData.get("password");
 
-                Connection conn = DatabaseManager.getConnection();
                 JdbcUserRepository userRepository = new JdbcUserRepository(conn);
                 int userId = userRepository.createUser(name, email, password);
                 Map<String, Object> result = new HashMap<>();
@@ -133,7 +131,7 @@ public class SparkApp {
         Spark.post("/updateinterests", (request, response) -> {
             response.type("application/json");
 
-            try {
+            try(Connection conn = DatabaseManager.getConnection()) {
                 // Parse JSON request safely
                 JsonObject requestJson = JsonParser.parseString(request.body()).getAsJsonObject();
                 int userId = requestJson.get("userId").getAsInt();
@@ -145,7 +143,6 @@ public class SparkApp {
                 }
 
                 // Update DB
-                Connection conn = DatabaseManager.getConnection();
                 JdbcUserRepository userRepository = new JdbcUserRepository(conn);
                 boolean isSuccess = userRepository.updateInterests(userId, interestsList);
 
