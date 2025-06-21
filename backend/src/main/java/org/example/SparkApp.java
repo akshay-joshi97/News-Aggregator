@@ -181,13 +181,14 @@ public class SparkApp {
 
             try {
                 // Run Article Deletion Batch
-                DeleteOldArticlesScheduler.deleteOldArticles(2);
+                //DeleteOldArticlesScheduler.deleteOldArticles(2);
 
                 // Run Article Fetch Batch
+                System.out.println("before runTopicWise batch>>>");
                 NewsFetchBatch.runBatchTopicWise(AppConstants.TOPIC_LIST);
-
+                System.out.println("after runTopicWise batch>>>");
                 // Run Topic Cache Batch
-                TopicCacheUpdationBatch.topicCacheUpdationProcedure(AppConstants.TOPIC_LIST, 10);
+                //TopicCacheUpdationBatch.topicCacheUpdationProcedure(AppConstants.TOPIC_LIST, 10);
 
                 // Success response
                 Map<String, Object> success = new HashMap<>();
