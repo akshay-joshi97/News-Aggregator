@@ -49,7 +49,7 @@ console.log('data>>>', data);
     .then(response => {
       if (response.success) {
         alert("Interests saved successfully!");
-        window.location.href = `feed.html?userId=${data.userId}`;
+        window.location.href = "feed.html?userId=${data.userId}";
       } else {
         alert("Error: " + response.message);
       }

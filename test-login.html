@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Test</title>
+</head>
+<body>
+    <h2>Login Test</h2>
+    <div>
+        <p>Email: ram@gmail.com</p>
+        <p>Password: Abcde12345</p>
+    </div>
+    <button onclick="testLogin()">Test Login</button>
+    <div id="result" style="margin-top: 20px; white-space: pre-wrap;"></div>
+
+    <script>
+        async function testLogin() {
+            try {
+                const response = await fetch('https://news-aggregator-backend.onrender.com/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: 'ram@gmail.com',
+                        password: 'Abcde12345'
+                    })
+                });
+                const data = await response.json();
+                document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('result').textContent = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html> 
