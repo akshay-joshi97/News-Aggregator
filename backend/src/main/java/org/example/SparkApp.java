@@ -171,39 +171,39 @@ public class SparkApp {
             }
         });
 
-        // Exposing endpoint for triggering batch jobs from cron-job
-        Spark.get("/triggerbatch", (request, response) -> {
-            System.out.println("spark endpoint trigger batch hit >>>");
-            response.type("application/json");
-
-            try {
-                // Run Article Deletion Batch
-                //DeleteOldArticlesScheduler.deleteOldArticles(2);
-
-                // Run Article Fetch Batch
-                System.out.println("before runTopicWise batch>>>");
-                NewsFetchBatch.runBatchTopicWise(AppConstants.TOPIC_LIST);
-                System.out.println("after runTopicWise batch>>>");
-                // Run Topic Cache Batch
-                //TopicCacheUpdationBatch.topicCacheUpdationProcedure(AppConstants.TOPIC_LIST, 10);
-
-                // Success response
-                Map<String, Object> success = new HashMap<>();
-                success.put("success", true);
-                success.put("message", "Batch jobs triggered successfully");
-                success.put("status", 200);
-                return gson.toJson(success);
-
-            } catch (Exception e) {
-                Logger.addLog("Batch trigger failed: " + request.body(), "SparkApp, /triggerbatch");
-
-                Map<String, Object> error = new HashMap<>();
-                error.put("success", false);
-                error.put("message", "Batch trigger failed: " + e.getMessage());
-                error.put("status", 500);
-                return gson.toJson(error);
-            }
-        });
+//        // Exposing endpoint for triggering batch jobs from cron-job
+//        Spark.get("/triggerbatch", (request, response) -> {
+//            System.out.println("spark endpoint trigger batch hit >>>");
+//            response.type("application/json");
+//
+//            try {
+//                // Run Article Deletion Batch
+//                //DeleteOldArticlesScheduler.deleteOldArticles(2);
+//
+//                // Run Article Fetch Batch
+//                System.out.println("before runTopicWise batch>>>");
+//                NewsFetchBatch.runBatchTopicWise(AppConstants.TOPIC_LIST);
+//                System.out.println("after runTopicWise batch>>>");
+//                // Run Topic Cache Batch
+//                //TopicCacheUpdationBatch.topicCacheUpdationProcedure(AppConstants.TOPIC_LIST, 10);
+//
+//                // Success response
+//                Map<String, Object> success = new HashMap<>();
+//                success.put("success", true);
+//                success.put("message", "Batch jobs triggered successfully");
+//                success.put("status", 200);
+//                return gson.toJson(success);
+//
+//            } catch (Exception e) {
+//                Logger.addLog("Batch trigger failed: " + request.body(), "SparkApp, /triggerbatch");
+//
+//                Map<String, Object> error = new HashMap<>();
+//                error.put("success", false);
+//                error.put("message", "Batch trigger failed: " + e.getMessage());
+//                error.put("status", 500);
+//                return gson.toJson(error);
+//            }
+//        });
 
         System.out.println("Server started on https://news-aggregator-0w52.onrender.com/");
     }

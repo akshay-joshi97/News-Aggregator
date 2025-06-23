@@ -17,7 +17,7 @@ public class DatabaseManager {
         config.setPassword("Akshay@123@supabase");
 
         // Optional but important
-        config.setMaximumPoolSize(5);  // Don't exceed Supabase limit (15)
+        config.setMaximumPoolSize(3);  // Don't exceed Supabase limit (15)
         config.setMinimumIdle(1);
         config.setIdleTimeout(10000);
         config.setConnectionTimeout(30000);

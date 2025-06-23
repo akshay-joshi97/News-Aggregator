@@ -141,11 +141,8 @@ public class JdbcUserRepository {
     public static void main(String args[]){
         try(Connection conn = DatabaseManager.getConnection()){
             JdbcUserRepository repo = new JdbcUserRepository(conn);
-            boolean isSuccess = repo.updateInterests(6, Arrays.asList(
-                    "technology", "top", "sports", "business", "science",
-                    "entertainment", "health", "world", "politics", "crime",
-                    "environment", "tourism", "education"));
-            System.out.println("isSuccess : " + isSuccess);
+            int userId = repo.loginUser("ram@gmail.com", "Abcde12345");
+            System.out.println("userId : " + userId);
         } catch (Exception e) {
             System.out.println("Connection error: " + e.getMessage());
             e.printStackTrace();
