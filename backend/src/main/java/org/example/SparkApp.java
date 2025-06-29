@@ -6,6 +6,8 @@ import com.google.gson.Gson;
 
 import java.sql.Array;
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.SQLTimeoutException;
 import java.util.*;
 
 public class SparkApp {
@@ -168,6 +170,72 @@ public class SparkApp {
                 error.put("message", "Interests update failed: " + e.getMessage());
                 error.put("status", 500);
                 return gson.toJson(error);
+            }
+        });
+
+        //Exposing endpoint to get user-wise articles from db
+        Spark.post("/getuserarticles", (request, response) -> {
+            response.type("application/json");
+            Map<String, Object> responseMap = new HashMap<>();
+
+            try {
+                JsonObject requestJson = JsonParser.parseString(request.body()).getAsJsonObject();
+                if (!requestJson.has("userId")) {
+                    response.status(400);
+                    responseMap.put("success", false);
+                    responseMap.put("message", "Missing userId field");
+                    responseMap.put("status", 400);
+                    return gson.toJson(responseMap);
+                }
+
+                int userId = requestJson.get("userId").getAsInt();
+                if (userId < 0) {
+                    response.status(400);
+                    responseMap.put("success", false);
+                    responseMap.put("message", "Invalid user ID");
+                    responseMap.put("status", 400);
+                    return gson.toJson(responseMap);
+                }
+
+                try (Connection conn = DatabaseManager.getConnection()) {
+                    List<Article> articlesList = new JdbcArticleRepository(conn)
+                            .getRecommendedArticlesForUser(userId);
+
+                    responseMap.put("success", true);
+                    responseMap.put("articles", articlesList);
+                    responseMap.put("status", 200);
+                    return gson.toJson(responseMap);
+
+                } catch (SQLTimeoutException e) {
+                    Logger.addLog("DB timeout for userId: " + userId, "SparkApp, /getuserarticles");
+                    response.status(503);
+                    responseMap.put("success", false);
+                    responseMap.put("message", "Database timeout");
+                    responseMap.put("status", 503);
+                    return gson.toJson(responseMap);
+                } catch (SQLException e) {
+                    Logger.addLog("DB error for userId: " + userId + " - " + e.getMessage(),
+                            "SparkApp, /getuserarticles");
+                    response.status(500);
+                    responseMap.put("success", false);
+                    responseMap.put("message", "Database error");
+                    responseMap.put("status", 500);
+                    return gson.toJson(responseMap);
+                }
+
+            } catch (JsonParseException | IllegalStateException e) {
+                response.status(400);
+                responseMap.put("success", false);
+                responseMap.put("message", "Invalid JSON format");
+                responseMap.put("status", 400);
+                return gson.toJson(responseMap);
+            } catch (Exception e) {
+                Logger.addLog("Unexpected error: " + e.getMessage(), "SparkApp, /getuserarticles");
+                response.status(500);
+                responseMap.put("success", false);
+                responseMap.put("message", "Internal server error");
+                responseMap.put("status", 500);
+                return gson.toJson(responseMap);
             }
         });
 
